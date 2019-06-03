@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bupt.ipoc.programmer.dao.ClazzDao">
+	
+	<select id="findList" parameterType="Map" resultType="Clazz">
+		 select * from clazz 
+		 <where>
+			 <if test="name !=null">
+			 	name like #{name}
+			 </if>
+			 <if test="gradeId !=null">
+			  	and gradeId = #{gradeId}
+			 </if>
+		 </where> 
+		 limit #{offset},#{pageSize}
+	</select>
+	
+	<select id="findAll" resultType="Clazz">
+		select * from clazz
+	</select>
+	
+	<select id="getTotal" parameterType="Map" resultType="int">
+		select count(*) from clazz 
+		<where>
+			 <if test="name !=null">
+			 	name like #{name}
+			 </if>
+			 <if test="gradeId !=null">
+			  	and gradeId = #{gradeId}
+			 </if>
+		 </where> 
+	</select>
+	
+	<insert id="add" parameterType="Clazz">
+		insert into clazz(id,gradeId,name,remark) values(null,#{gradeId},#{name},#{remark})
+	</insert>
+	
+	<update id="edit" parameterType="Clazz">
+		update clazz set name= #{name},gradeId= #{gradeId},remark = #{remark} where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from clazz where id in (${value})
+	</delete>
+	
+</mapper>
